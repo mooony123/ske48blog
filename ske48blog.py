@@ -51,7 +51,7 @@ def blog_to_str(blog: dict) -> str:
 async def get_new_blogs() -> list:
     retval = []
 
-    page = requests.get('https://ske48.co.jp/blog/list/3/0/')
+    page = requests.get('https://ske48.co.jp/blog/list/3/0/', timeout=60)
     soup = BeautifulSoup(page.content, 'html.parser')
 
     async def get(name, aiohttpsession):
