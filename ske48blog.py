@@ -36,7 +36,10 @@ def parse_blog(url: str) -> dict:
     return_dict[AUTHOR] = blog_section.find('span', class_='cat name').get_text()
     return_dict[DATE] = blog_section.find('p', class_='date').get_text()
     for para in blog_section.find('div', class_='txt').find_all('p'):
+        for br in para.find_all('br'):
+            br.replace_with('\n')
         return_dict[TEXT] += (para.get_text() + '\n')
+    return_dict[TEXT] = re.sub(r'\n{4,}', '\n\n\n', return_dict[TEXT])
     for img in blog_section.find('div', class_='txt').find_all('img'):
         return_dict[IMAGES].append(img['src'])
 
